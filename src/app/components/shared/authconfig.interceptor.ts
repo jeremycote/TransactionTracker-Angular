@@ -9,6 +9,10 @@ import { AuthService } from './auth.service';
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
   intercept(req: HttpRequest<any>, next: HttpHandler) {
+    req = req.clone({
+      withCredentials: true,
+    });
+
     if (
       this.authService.isLoggedIn &&
       !req.url.includes('api.exchangerate.host')
@@ -16,6 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
       const authTokens = this.authService.getTokens();
 
       req = req.clone({
+        withCredentials: true,
         setHeaders: {
           'access-token': authTokens.accessToken,
           client: authTokens.client,
