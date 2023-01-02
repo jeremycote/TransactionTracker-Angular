@@ -1,0 +1,212 @@
+<div
+  class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
+>
+  <div class="w-full max-w-md space-y-6">
+    <h1 class="font-black text-2xl">My Account</h1>
+
+    <form [formGroup]="updateNameForm" (ngSubmit)="submitNameForm()">
+      <div class="rounded-md">
+        <div class="mb-2">
+          <label class="font-normal text-md text-gray-800">Name</label>
+          <input
+            [ngClass]="{
+              'border-red-300':
+                isNameFormSubmitted && updateNameForm.get('name')?.invalid
+            }"
+            id="name"
+            name="email"
+            formControlName="name"
+            type="text"
+            autocomplete="name"
+            required
+            class="w-full appearance-none rounded-none rounded-lg border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+            placeholder="John Doe"
+          />
+          <div
+            class="invalid-input"
+            *ngIf="isNameFormSubmitted && updateNameForm.get('name')?.invalid"
+          >
+            The Name cannot be empty.
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary">Update Name</button>
+    </form>
+
+    <form [formGroup]="updatePasswordForm" (ngSubmit)="submitPasswordForm()">
+      <div class="rounded-md">
+        <div class="mb-2">
+          <label class="font-normal text-md text-gray-800"
+            >Current Password</label
+          >
+          <input
+            [ngClass]="{
+              'border-red-300':
+                isPasswordFormSubmitted &&
+                updatePasswordForm.get('current_password')?.invalid
+            }"
+            id="current-password"
+            name="current_password"
+            formControlName="current_password"
+            type="password"
+            autocomplete="password"
+            required
+            class="w-full appearance-none rounded-none rounded-lg border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+          />
+          <div
+            class="invalid-input"
+            *ngIf="
+              isPasswordFormSubmitted &&
+              updatePasswordForm.get('current_password')?.invalid
+            "
+          >
+            The Current Password cannot be empty.
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-md">
+        <div class="mb-2">
+          <label class="font-normal text-md text-gray-800">New Password</label>
+          <input
+            [ngClass]="{
+              'border-red-300':
+                isPasswordFormSubmitted &&
+                updatePasswordForm.get('password')?.invalid
+            }"
+            id="password"
+            name="password"
+            formControlName="password"
+            type="password"
+            autocomplete="password"
+            required
+            class="w-full appearance-none rounded-none rounded-lg border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+          />
+          <div
+            class="invalid-input"
+            *ngIf="
+              isPasswordFormSubmitted &&
+              updatePasswordForm.get('password')?.invalid
+            "
+          >
+            The New Password cannot be empty.
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-md">
+        <div class="mb-2">
+          <label class="font-normal text-md text-gray-800"
+            >New Password Confirmation</label
+          >
+          <input
+            [ngClass]="{
+              'border-red-300':
+                isPasswordFormSubmitted &&
+                updatePasswordForm.get('password_confirmation')?.invalid
+            }"
+            id="password-confirmation"
+            name="password_confirmation"
+            formControlName="password_confirmation"
+            type="password"
+            autocomplete="password"
+            required
+            class="w-full appearance-none rounded-none rounded-lg border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+          />
+          <div
+            class="invalid-input"
+            *ngIf="
+              isPasswordFormSubmitted &&
+              updatePasswordForm.get('password_confirmation')?.invalid
+            "
+          >
+            The New Password Confirmation cannot be empty.
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary">Update Password</button>
+    </form>
+
+    <form
+      [formGroup]="importTransactionsForm"
+      (ngSubmit)="submitImportTransactionsForm()"
+    >
+      <div class="rounded-md">
+        <div class="mb-2">
+          <label class="font-normal text-md text-gray-800"
+            >Import Transactions (CSV File)</label
+          >
+          <div class="text-sm text-gray-500 mb-1">
+            This might take a few minutes. Please do not reload the page
+          </div>
+
+          <input
+            type="file"
+            (change)="uploadFile($event)"
+            id="csv-file"
+            name="csv_file"
+            formControlName="csv_file"
+            type="file"
+            required
+            [ngClass]="{
+              'border-red-300':
+                isImportTransactionsFormSubmitted &&
+                importTransactionsForm.get('csv_file')?.invalid
+            }"
+            class="block w-full text-sm text-gray-900 file:px-3 file:py-2 file:border-0 file:mr-3 file:text-sm file:font-black file:bg-indigo-700 file:text-white hover:file:bg-indigo-800 rounded-lg border border-gray-300"
+          />
+
+          <div
+            class="invalid-input"
+            *ngIf="
+              isImportTransactionsFormSubmitted &&
+              importTransactionsForm.get('csv_file')?.invalid
+            "
+          >
+            The File Input cannot be empty.
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary">Import Transactions</button>
+    </form>
+
+    <div>
+      <div class="rounded-md">
+        <div class="mb-2">
+          <label class="font-normal text-md text-gray-800">Email Address</label>
+          <input
+            id="email"
+            name="email"
+            type="text"
+            value="{{ authService.currentUser?.email }}"
+            disabled
+            class="w-full appearance-none rounded-none rounded-lg border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+            placeholder="John Doe"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="rounded-md">
+        <div class="mb-2">
+          <label class="font-normal text-md text-gray-800"
+            >Default Currency</label
+          >
+          <input
+            id="default-currency"
+            name="default-currency"
+            type="text"
+            value="{{ authService.currentUser?.default_currency }}"
+            disabled
+            class="w-full appearance-none rounded-none rounded-lg border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+            placeholder="CAD"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

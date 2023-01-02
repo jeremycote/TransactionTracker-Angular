@@ -1,0 +1,59 @@
+<div class="mx-2 lg:mx-8">
+  <div class="md:flex my-4 place-content-between">
+    <h1 class="mb-1 md:mb-0 font-black text-2xl">My Charts</h1>
+    <div class="flex gap-2">
+      <div
+        *ngIf="categories$ | async as categories"
+        class="relative items-center"
+      >
+        <select [(ngModel)]="category" class="form-select" required>
+          <option value="0">Expenses/Income</option>
+          <option *ngFor="let category of categories" value="{{ category.id }}">
+            {{ category.name }} ({{ category.income }})
+          </option>
+        </select>
+        <div
+          class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
+        >
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+            <path
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+              fill-rule="evenodd"
+            ></path>
+          </svg>
+        </div>
+      </div>
+      <div class="relative items-center">
+        <select [(ngModel)]="year" class="form-select" required>
+          <option *ngFor="let year of years" value="{{ year }}">
+            {{ year }}
+          </option>
+        </select>
+        <div
+          class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
+        >
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+            <path
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+              fill-rule="evenodd"
+            ></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height: 80vh" *ngIf="lineChartData$ | async as lineChartData">
+    <canvas
+      baseChart
+      height="80vh"
+      [type]="'line'"
+      [data]="lineChartData"
+      [options]="lineChartOptions"
+      [legend]="true"
+    >
+    </canvas>
+  </div>
+</div>

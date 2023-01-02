@@ -1,0 +1,6 @@
+# Ignore artifacts:
+build
+coverage
+.angular/cache
+node_modules
+.idea

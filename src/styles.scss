@@ -1,1 +1,63 @@
-/* You can add global styles to this file, and also import other style files */
+@import "toastr";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply relative flex items-center justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+  }
+
+  .btn-disabled {
+    @apply relative flex items-center justify-center rounded-md border border-transparent bg-indigo-300 py-2 px-4 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-icon {
+    @apply relative flex items-center justify-center rounded-md border border-transparent bg-indigo-600 py-1 px-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+  }
+
+  .btn-primary-group-left {
+    @apply flex items-center justify-center rounded-l-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+  }
+
+  .btn-danger {
+    @apply relative flex items-center justify-center rounded-md border border-transparent bg-red-700 py-2 px-4 text-sm font-medium text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2;
+  }
+
+  .nav-link {
+    @apply block py-2 pl-3 pr-4 rounded md:hover:text-white;
+  }
+
+  .invalid-input {
+    @apply text-sm text-red-600;
+  }
+
+  .form-input {
+    @apply w-full appearance-none rounded-lg border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm;
+  }
+
+  .form-input-group-left {
+    @apply w-full appearance-none rounded-l border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm;
+  }
+
+  .form-select-group-left {
+    @apply w-full pl-3 pr-6 h-10 rounded-l appearance-none border-y border-l border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm;
+  }
+
+  .form-select-group-right {
+    @apply w-full pl-3 pr-6 h-10 rounded-r appearance-none border-y border-r border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm;
+  }
+
+  .form-select {
+    @apply w-full pl-3 pr-6 h-10 rounded appearance-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm;
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

@@ -1,0 +1,114 @@
+<div
+  class="border border-gray-300 rounded-md p-3 shadow-md"
+  *ngIf="monthlyTransactions$ | async as monthlyTransactions"
+>
+  <div *ngIf="year$ | async as year" class="mb-3 flex place-content-between">
+    <h1 class="text-xl font-black">
+      <span *ngIf="month">{{ monthNames[month - 1] }}</span> {{ year }}
+    </h1>
+    <div class="flex gap-1">
+      <button
+        (click)="
+          launchTransactionListDialog(
+            monthlyTransactions.transactions,
+            year,
+            month
+          )
+        "
+        class="btn-icon"
+      >
+        <fa-icon [icon]="faEye" size="lg"></fa-icon>
+      </button>
+
+      <div class="relative inline-block text-left">
+        <div>
+          <button (click)="isDropdownOpen = !isDropdownOpen" class="btn-icon">
+            <fa-icon [icon]="faPlus" size="lg"></fa-icon>
+          </button>
+        </div>
+        <div
+          *ngIf="isDropdownOpen"
+          class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          role="menu"
+          aria-orientation="vertical"
+          aria-labelledby="menu-button"
+          tabindex="-1"
+        >
+          <div class="py-1" role="none">
+            <button
+              *ngFor="let quickCreate of monthlyTransactions.quick_create"
+              (click)="createNewTransaction(quickCreate)"
+              class="text-gray-700 block px-4 py-2 text-sm w-full text-left hover:bg-gray-100"
+              role="menuitem"
+              tabindex="-1"
+              id="menu-item-0"
+            >
+              {{ quickCreate.name }}
+            </button>
+            <button
+              (click)="createNewTransaction()"
+              class="text-gray-700 block px-4 py-2 text-sm w-full text-left hover:bg-gray-100"
+              role="menuitem"
+              tabindex="-1"
+              id="menu-item-2"
+            >
+              Create Transaction
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overflow-x-auto relative sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+        <tr>
+          <th scope="col" class="py-3 px-6">Category</th>
+          <th scope="col" class="py-3 px-6">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="bg-white border-b hover:bg-gray-50"
+          *ngFor="let category of monthlyTransactions.sum_per_category"
+        >
+          <td class="py-4 px-6 font-normal text-gray-900 whitespace-nowrap">
+            {{ category.category_name }}
+          </td>
+          <td class="py-4 px-6 font-normal text-gray-900 whitespace-nowrap">
+            {{ category.sum | currency }}
+          </td>
+        </tr>
+        <tr class="bg-white border-y-2 hover:bg-gray-50">
+          <td class="py-4 px-6 font-normal text-gray-900 whitespace-nowrap">
+            Total Expenses
+          </td>
+          <td class="py-4 px-6 font-black text-gray-900 whitespace-nowrap">
+            {{ monthlyTransactions.total_expenses | currency }}
+          </td>
+        </tr>
+        <tr class="bg-white border-b-2 border-black hover:bg-gray-50">
+          <td class="py-4 px-6 font-normal text-gray-900 whitespace-nowrap">
+            Total Income
+          </td>
+          <td class="py-4 px-6 font-black text-gray-900 whitespace-nowrap">
+            {{ monthlyTransactions.total_income | currency }}
+          </td>
+        </tr>
+        <tr class="bg-white hover:bg-gray-50">
+          <td
+            class="py-4 px-6 font-normal text-lg text-gray-900 whitespace-nowrap"
+          >
+            Total
+          </td>
+          <td
+            class="py-4 px-6 font-bold text-lg text-gray-900 whitespace-nowrap"
+          >
+            {{ monthlyTransactions.total_sum | currency }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

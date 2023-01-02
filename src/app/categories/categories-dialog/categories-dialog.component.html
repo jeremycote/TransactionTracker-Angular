@@ -1,0 +1,55 @@
+<mat-dialog-content>
+  <h2 class="mb-3 text-xl font-bold text-gray-800">
+    {{ edit ? "Update the category" : "Create a new category" }}
+  </h2>
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="saveCategory()">
+    <div class="mb-3">
+      <label class="font-normal text-md text-gray-800"
+        >Name of the Category</label
+      >
+      <input
+        type="text"
+        formControlName="name"
+        class="form-input"
+        placeholder="Category Name"
+        required
+      />
+      <div
+        class="invalid-input"
+        *ngIf="isFormSubmitted && form.controls['name'].errors"
+      >
+        The Category Name cannot be empty
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="font-normal text-md text-gray-800">Type of Category</label>
+      <div class="relative items-center">
+        <select formControlName="income" class="form-select" required>
+          <option value="income">Income</option>
+          <option value="neutral">Neutral</option>
+          <option value="expense">Expense</option>
+        </select>
+        <div
+          class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
+        >
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+            <path
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+              fill-rule="evenodd"
+            ></path>
+          </svg>
+        </div>
+      </div>
+      <div
+        class="invalid-input"
+        *ngIf="isFormSubmitted && form.controls['income'].errors"
+      >
+        The Category's Type cannot be empty
+      </div>
+    </div>
+
+    <button type="submit" class="btn-primary w-full">Save</button>
+  </form>
+</mat-dialog-content>

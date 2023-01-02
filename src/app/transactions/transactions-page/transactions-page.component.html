@@ -1,0 +1,44 @@
+<div class="mx-2 lg:mx-8">
+  <div class="md:flex my-4 place-content-between items-center">
+    <h1 class="font-black text-2xl mb-2 md:mb-0">My Transactions</h1>
+    <div class="flex gap-2">
+      <div class="relative items-center">
+        <select [(ngModel)]="year" class="form-select" required>
+          <option *ngFor="let year of years" value="{{ year }}">
+            {{ year }}
+          </option>
+        </select>
+        <div
+          class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
+        >
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+            <path
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+              fill-rule="evenodd"
+            ></path>
+          </svg>
+        </div>
+      </div>
+      <button class="btn-primary" (click)="launchNewTransactionDialog()">
+        Create new Transaction
+      </button>
+    </div>
+  </div>
+
+  <div class="pb-3">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-3">
+      <div *ngFor="let month of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+        <app-month-card
+          [month]="month"
+          [year]="year"
+          (createTransaction)="launchNewTransactionDialog($event)"
+        ></app-month-card>
+      </div>
+    </div>
+    <app-month-card
+      [year]="year"
+      (createTransaction)="launchNewTransactionDialog($event)"
+    ></app-month-card>
+  </div>
+</div>
