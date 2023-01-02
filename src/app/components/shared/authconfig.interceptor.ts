@@ -9,9 +9,11 @@ import { AuthService } from './auth.service';
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    req = req.clone({
-      withCredentials: true,
-    });
+    if (!req.url.includes('api.exchangerate.host')) {
+      req = req.clone({
+        withCredentials: true,
+      });
+    }
 
     if (
       this.authService.isLoggedIn &&
