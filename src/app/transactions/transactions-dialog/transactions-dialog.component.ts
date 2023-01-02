@@ -76,7 +76,8 @@ export class TransactionsDialogComponent {
       original_currency: new FormControl(
         this.transaction?.original_currency ??
           this.quickCreate?.original_currency ??
-          0,
+          this.authService.currentUser?.default_currency ??
+          'CAD',
         Validators.required
       ),
       final_price: new FormControl(
