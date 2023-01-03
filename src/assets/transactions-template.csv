@@ -1,0 +1,1 @@
+date (yyyy-mm-dd),price (ex: 17.24),currency (ex: CAD),name (String),ignore_from_calculation (Boolean: true/false),category_name (String),"income (expense, income, neutral)"

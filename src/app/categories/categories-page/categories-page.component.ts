@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CategoriesDialogComponent } from '../categories-dialog/categories-dialog.component';
 import { lastValueFrom } from 'rxjs';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-categories-page',
@@ -84,18 +84,11 @@ export class CategoriesPageComponent {
     }
   }
 
-  async reorder(event: CdkDragDrop<Category[]>) {
-    await moveItemInArray(
-      event.container.data,
-      event.previousIndex,
-      event.currentIndex
-    );
+  async reorder(event: CdkDragDrop<Category[]>, categories: Category[]) {
+    await moveItemInArray(categories, event.previousIndex, event.currentIndex);
+
     await lastValueFrom(
-      this.categoriesService.reorderCategories$(
-        await lastValueFrom(
-          this.categories$.pipe(map((v) => v.map((c) => c.id)))
-        )
-      )
+      this.categoriesService.reorderCategories$(categories.map((c) => c.id))
     ).then((r) => {
       if (!r) {
         this.toastrService.error(

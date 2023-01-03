@@ -133,12 +133,20 @@ export class AuthService {
     return this.http
       .delete<any>(`${this.endpoint}/sign_out`, {})
       .pipe(catchError(this.handleError))
-      .subscribe(async () => {
-        localStorage.removeItem('access-token');
-        localStorage.removeItem('client');
-        localStorage.removeItem('uid');
-        await this.router.navigate(['signin']);
-      });
+      .subscribe(
+        async () => {
+          localStorage.removeItem('access-token');
+          localStorage.removeItem('client');
+          localStorage.removeItem('uid');
+          await this.router.navigate(['signin']);
+        },
+        async () => {
+          localStorage.removeItem('access-token');
+          localStorage.removeItem('client');
+          localStorage.removeItem('uid');
+          await this.router.navigate(['signin']);
+        }
+      );
   }
 
   // Error
