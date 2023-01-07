@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { ChartsPageComponent } from './charts-page.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgChartsModule } from 'ng2-charts';
+import { CategoryChartsComponent } from './category-charts/category-charts.component';
+import { PieChartsComponent } from './pie-charts/pie-charts.component';
 
 export const routes: Routes = [
   {
@@ -19,7 +21,11 @@ export const routes: Routes = [
 export class ChartsRouting {}
 
 @NgModule({
-  declarations: [ChartsPageComponent],
+  declarations: [
+    ChartsPageComponent,
+    CategoryChartsComponent,
+    PieChartsComponent,
+  ],
   imports: [CommonModule, ChartsRouting, FormsModule, NgChartsModule],
   exports: [ChartsPageComponent],
 })
