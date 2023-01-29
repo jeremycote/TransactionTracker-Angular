@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
     this.authService.validateTokens().subscribe(
       async (res) => {
         if (!res.success) {
+          this.authService.clearUser();
           await this.router.navigate(['/', 'auth', 'login']);
         }
       },

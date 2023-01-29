@@ -58,6 +58,13 @@ export class AuthService {
       .pipe(tap((res) => (this.currentUser = res.data)));
   }
 
+  // Clear User
+  clearUser() {
+    localStorage.removeItem('access-token');
+    localStorage.removeItem('client');
+    localStorage.removeItem('uid');
+  }
+
   // Account Update
   accountUpdateName(name: string) {
     return this.http.put<any>(
@@ -135,15 +142,11 @@ export class AuthService {
       .pipe(catchError(this.handleError))
       .subscribe(
         async () => {
-          localStorage.removeItem('access-token');
-          localStorage.removeItem('client');
-          localStorage.removeItem('uid');
+          this.clearUser();
           await this.router.navigate(['signin']);
         },
         async () => {
-          localStorage.removeItem('access-token');
-          localStorage.removeItem('client');
-          localStorage.removeItem('uid');
+          this.clearUser();
           await this.router.navigate(['signin']);
         }
       );
