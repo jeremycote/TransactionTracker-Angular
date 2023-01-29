@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './components/shared/auth.service';
-import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,14 +13,19 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.authService.validateTokens().subscribe(
-      async (res) => {
-        if (!res.success) {
+    if (this.authService.isLoggedIn) {
+      this.authService.validateTokens().subscribe(
+        async (res) => {
+          if (!res.success) {
+            this.authService.clearUser();
+            await this.router.navigate(['/', 'auth', 'login']);
+          }
+        },
+        async () => {
           this.authService.clearUser();
           await this.router.navigate(['/', 'auth', 'login']);
         }
-      },
-      async () => await this.router.navigate(['/', 'auth', 'login'])
-    );
+      );
+    }
   }
 }
