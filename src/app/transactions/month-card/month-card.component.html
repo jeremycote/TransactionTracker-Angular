@@ -103,7 +103,12 @@
             Total
           </td>
           <td
-            class="py-4 px-6 font-bold text-lg text-gray-900 whitespace-nowrap"
+            class="py-4 px-6 font-bold text-lg whitespace-nowrap"
+            [ngClass]="{
+              'text-gray-900': monthlyTransactions.total_sum === 0,
+              'text-green-700': monthlyTransactions.total_sum > 0,
+              'text-red-700': monthlyTransactions.total_sum < 0
+            }"
           >
             {{ monthlyTransactions.total_sum | currency }}
           </td>
