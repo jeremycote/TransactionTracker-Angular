@@ -77,7 +77,7 @@ export class MonthCardComponent implements OnInit {
     month: number | null
   ) {
     this.dialog.open(TransactionsListDialogComponent, {
-      width: '800px',
+      width: '1000px',
       data: {
         transactions: transactions,
         year: year,

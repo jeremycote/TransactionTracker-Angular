@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { lastValueFrom } from 'rxjs';
 import {
+  Currencies,
   QuickCreate,
   Transaction,
   TransactionService,
@@ -30,6 +31,7 @@ export class TransactionsDialogComponent {
   transaction: Transaction;
   quickCreate: QuickCreate | null = null;
   categories$ = this.categoriesService.fetchCategories$();
+  finalPriceError = false;
 
   constructor(
     private fb: FormBuilder,
@@ -152,11 +154,19 @@ export class TransactionsDialogComponent {
   }
 
   async updateFinalPrice() {
-    this.form.controls['final_price'].setValue(
-      await this.currencyService.convertCurrency(
-        this.form.controls['original_price'].value,
-        this.form.controls['original_currency'].value
-      )
+    const finalPrice = await this.currencyService.convertCurrency(
+      this.form.controls['original_price'].value,
+      this.form.controls['original_currency'].value,
+      this.form.controls['date'].value
     );
+
+    if (finalPrice) {
+      this.form.controls['final_price'].setValue(finalPrice);
+      this.finalPriceError = false;
+    } else {
+      this.finalPriceError = true;
+    }
   }
+
+  protected readonly Currencies = Currencies;
 }

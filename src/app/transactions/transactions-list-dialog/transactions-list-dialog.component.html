@@ -11,7 +11,10 @@
         <tr>
           <th scope="col" class="py-3 px-6 w-[200px]">Name</th>
           <th scope="col" class="py-3 px-6">Category</th>
-          <th scope="col" class="py-3 px-6">Price</th>
+          <th scope="col" class="py-3 px-6">Original Price</th>
+          <th scope="col" class="py-3 px-6">
+            Final Price ({{ authService.currentUser?.default_currency }})
+          </th>
           <th scope="col" class="py-3 px-6">Date</th>
           <th scope="col" class="py-3 px-6">Edit</th>
           <th scope="col" class="py-3 px-6">Delete</th>
@@ -28,6 +31,12 @@
           <td class="py-4 px-6 font-normal text-gray-900">
             {{ getCategoryNameById(transaction.category_id, categories) }}
           </td>
+          <th class="py-4 px-6 font-normal text-gray-900">
+            {{
+              transaction.original_price
+                | currency : transaction.original_currency
+            }}
+          </th>
           <th class="py-4 px-6 font-normal text-gray-900">
             {{
               transaction.final_price | currency : transaction.final_currency

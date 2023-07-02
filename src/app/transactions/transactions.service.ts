@@ -6,10 +6,23 @@ import config from '../../envVariables';
 
 const API_URL = `${config.API_URL}/transactions`;
 
-enum Currencies {
+export enum Currencies {
   CAD = 'CAD',
   EUR = 'EUR',
   USD = 'USD',
+  GBP = 'GBP',
+  CNY = 'CNY',
+  AUD = 'AUD',
+  CHF = 'CHF',
+  HKD = 'HKD',
+  SGD = 'SGD',
+  SEK = 'SEK',
+  NOK = 'NOK',
+  DKK = 'DKK',
+  CZK = 'CZK',
+  AED = 'AED',
+  TRY = 'TRY',
+  MSX = 'MXN',
 }
 
 export interface Transaction {

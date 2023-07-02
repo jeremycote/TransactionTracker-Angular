@@ -1,14 +1,7 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import {
-  Chart,
-  ChartConfiguration,
-  ChartData,
-  DefaultDataPoint,
-  LegendItem,
-} from 'chart.js';
+import { BehaviorSubject, combineLatest, filter, Observable } from 'rxjs';
+import { ChartConfiguration, ChartData, DefaultDataPoint } from 'chart.js';
 import { TransactionService } from '../../../transactions/transactions.service';
-import { AuthService } from '../../../components/shared/auth.service';
 import { monthNames } from 'src/app/transactions/month-card/month-card.component';
 import { map, tap } from 'rxjs/operators';
 
@@ -62,9 +55,16 @@ export class PieChartsComponent {
             (this.pieChartData$ = this.transactionsService
               .fetchMonthlyTransactions$(month, year)
               .pipe(
+                map((data) =>
+                  data.sum_per_category.filter((c) => Number(c.sum) !== 0)
+                ),
                 map((data) => ({
-                  datasets: [{ data: data.sum_per_category.map((c) => c.sum) }],
-                  labels: data.sum_per_category.map((c) => c.category_name),
+                  datasets: [
+                    {
+                      data: data.map((c) => c.sum),
+                    },
+                  ],
+                  labels: data.map((c) => c.category_name),
                 }))
               ))
         )

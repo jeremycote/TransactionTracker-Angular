@@ -13,6 +13,7 @@ import {
   CategoriesService,
   Category,
 } from '../../categories/categories.service';
+import { AuthService } from '../../components/shared/auth.service';
 @Component({
   selector: 'app-transactions-list-dialog',
   templateUrl: './transactions-list-dialog.component.html',
@@ -25,6 +26,7 @@ export class TransactionsListDialogComponent {
   monthNames = monthNames;
   categories$ = this.categoriesService.fetchCategories$();
   constructor(
+    public authService: AuthService,
     private dialog: MatDialog,
     private transactionService: TransactionService,
     private categoriesService: CategoriesService,

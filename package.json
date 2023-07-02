@@ -30,6 +30,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "autoprefixer": "^10.4.13",
     "chart.js": "^3.6.0",
+    "mathjs": "^11.8.2",
     "ng2-charts": "4.1.1",
     "ngx-toastr": "^16.0.1",
     "postcss": "^8.4.20",

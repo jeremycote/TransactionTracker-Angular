@@ -1,6 +1,6 @@
 {
-  "name": "transactions-angular",
-  "short_name": "transactions-angular",
+  "name": "Transactions Tracker",
+  "short_name": "Transactions Tracker",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
