@@ -3,7 +3,7 @@ const devConfig = {
 };
 
 const prodConfig = {
-  API_URL: 'https://api.transactions.afetiveau.com/api/v1',
+  API_URL: 'https://transactions-api.hdh-analytics.com/api/v1',
 };
 
 const config =
