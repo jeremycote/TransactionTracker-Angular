@@ -3,7 +3,7 @@ const devConfig = {
 };
 
 const prodConfig = {
-  API_URL: 'https://api.transactions.afetiveau.com/api/v1',
+  API_URL: process.env['TRANSACTION_API_URL'],
 };
 
 const config =
