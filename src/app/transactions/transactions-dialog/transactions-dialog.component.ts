@@ -163,7 +163,7 @@ export class TransactionsDialogComponent {
 
   async updateFinalPrice() {
     const finalPrice = this.checkSameCurrency()
-      ? this.form.controls['original_price']
+      ? this.form.controls['original_price'].value
       : await this.currencyService.convertCurrency(
           this.form.controls['original_price'].value,
           this.form.controls['original_currency'].value,
