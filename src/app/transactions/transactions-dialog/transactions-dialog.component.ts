@@ -113,6 +113,7 @@ export class TransactionsDialogComponent {
 
   async saveTransaction() {
     this.isFormSubmitted = true;
+    await this.updateFinalPrice();
     if (this.form.valid) {
       if (this.edit) {
         await lastValueFrom(
@@ -153,12 +154,21 @@ export class TransactionsDialogComponent {
     );
   }
 
-  async updateFinalPrice() {
-    const finalPrice = await this.currencyService.convertCurrency(
-      this.form.controls['original_price'].value,
-      this.form.controls['original_currency'].value,
-      this.form.controls['date'].value
+  checkSameCurrency(): boolean {
+    return (
+      this.form.controls['original_currency'].value ===
+      this.form.controls['final_currency'].value
     );
+  }
+
+  async updateFinalPrice() {
+    const finalPrice = this.checkSameCurrency()
+      ? this.form.controls['original_price']
+      : await this.currencyService.convertCurrency(
+          this.form.controls['original_price'].value,
+          this.form.controls['original_currency'].value,
+          this.form.controls['date'].value
+        );
 
     if (finalPrice) {
       this.form.controls['final_price'].setValue(finalPrice);
