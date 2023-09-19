@@ -104,6 +104,7 @@ export class TransactionsDialogComponent {
     ) {
       this.currencyService
         .convertCurrency(
+          this.checkSameCurrency(),
           this.quickCreate.original_price,
           this.quickCreate.original_currency
         )
@@ -162,13 +163,12 @@ export class TransactionsDialogComponent {
   }
 
   async updateFinalPrice() {
-    const finalPrice = this.checkSameCurrency()
-      ? this.form.controls['original_price']
-      : await this.currencyService.convertCurrency(
-          this.form.controls['original_price'].value,
-          this.form.controls['original_currency'].value,
-          this.form.controls['date'].value
-        );
+    const finalPrice = await this.currencyService.convertCurrency(
+      this.checkSameCurrency(),
+      this.form.controls['original_price'].value,
+      this.form.controls['original_currency'].value,
+      this.form.controls['date'].value
+    );
 
     if (finalPrice) {
       this.form.controls['final_price'].setValue(finalPrice);

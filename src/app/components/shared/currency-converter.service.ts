@@ -15,6 +15,7 @@ export class CurrencyConverterService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   async convertCurrency(
+    sameCurrency: boolean,
     initialValue: number | string,
     initialCurrency: string,
     date?: string
@@ -26,13 +27,15 @@ export class CurrencyConverterService {
 
     try {
       const value = evaluate(String(initialValue));
-      return await lastValueFrom(
-        this.http
-          .get(
-            `${API_URL}/convert?from=${initialCurrency}&to=${this.authService.currentUser?.default_currency}&amount=${value}&date=${finalDate}`
-          )
-          .pipe(map((res: any) => res.result))
-      );
+      return sameCurrency
+        ? value
+        : await lastValueFrom(
+            this.http
+              .get(
+                `${API_URL}/convert?from=${initialCurrency}&to=${this.authService.currentUser?.default_currency}&amount=${value}&date=${finalDate}`
+              )
+              .pipe(map((res: any) => res.result))
+          );
     } catch {
       return null;
     }
