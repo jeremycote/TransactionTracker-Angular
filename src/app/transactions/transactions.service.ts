@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import config from '../../envVariables';
 
 const API_URL = `${config.API_URL}/transactions`;
@@ -99,17 +99,22 @@ export class TransactionService {
   }
 
   fetchChartsDatasets$(
-    year: number | null,
-    category_id?: number | null
+    year: number,
+    category_ids?: number[] | null
   ): Observable<ChartsDatasets[]> {
     return this.transactionsToUpdate.pipe(
       startWith(null as unknown),
       switchMap(() => {
-        return this.http.get<ChartsDatasets[]>(
-          `${API_URL}/charts?year=${year}${
-            category_id && category_id > 0 ? `&category_id=${category_id}` : ''
-          }`
-        );
+        return this.http.get<ChartsDatasets[]>(`${API_URL}/charts`, {
+          params: {
+            year: year,
+            ...(category_ids &&
+              category_ids.length > 0 &&
+              category_ids[0] !== 0 && {
+                'category_ids[]': category_ids,
+              }),
+          },
+        });
       })
     );
   }
