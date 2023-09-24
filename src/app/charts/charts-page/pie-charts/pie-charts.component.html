@@ -4,6 +4,7 @@
     <div class="flex gap-2">
       <div class="relative items-center">
         <select [(ngModel)]="month" class="form-select" required>
+          <option value="">Full Year</option>
           <option *ngFor="let month of months" value="{{ month }}">
             {{ monthNames[month - 1] }}
           </option>
