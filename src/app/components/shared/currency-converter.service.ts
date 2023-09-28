@@ -32,7 +32,7 @@ export class CurrencyConverterService {
         : await lastValueFrom(
             this.http
               .get(
-                `${API_URL}/convert?from=${initialCurrency}&to=${this.authService.currentUser?.default_currency}&amount=${value}&date=${finalDate}`
+                `${API_URL}/convert?from=${initialCurrency}&to=${this.authService.currentUser?.default_currency}&amount=${value}&date=${finalDate}&access_key=3c0c87e6773f791673b5c66e04761f6f`
               )
               .pipe(map((res: any) => res.result))
           );
