@@ -6,13 +6,23 @@ import { map } from 'rxjs/operators';
 import { formatDate } from '@angular/common';
 import { evaluate } from 'mathjs';
 
-const API_URL = 'https://api.exchangerate.host';
+const API_URL = 'https://api.freecurrencyapi.com/v1/';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CurrencyConverterService {
   constructor(private http: HttpClient, private authService: AuthService) {}
+
+  private returnEndpoint(date: string): string {
+    const currentDate = new Date();
+    currentDate.setUTCHours(0, 0, 0, 0);
+    if (new Date(date) >= currentDate) {
+      return 'latest';
+    } else {
+      return 'historical';
+    }
+  }
 
   async convertCurrency(
     sameCurrency: boolean,
@@ -25,6 +35,11 @@ export class CurrencyConverterService {
         ? formatDate(new Date(), 'yyyy-MM-dd', 'en_US')
         : date;
 
+    const finalCurrency = this.authService.currentUser?.default_currency;
+    if (!finalCurrency) {
+      return null;
+    }
+
     try {
       const value = evaluate(String(initialValue));
       return sameCurrency
@@ -32,9 +47,18 @@ export class CurrencyConverterService {
         : await lastValueFrom(
             this.http
               .get(
-                `${API_URL}/convert?from=${initialCurrency}&to=${this.authService.currentUser?.default_currency}&amount=${value}&date=${finalDate}&access_key=3c0c87e6773f791673b5c66e04761f6f`
+                `${API_URL}/${this.returnEndpoint(
+                  finalDate
+                )}?base_currency=${initialCurrency}&currencies=${finalCurrency}&date=${finalDate}&apikey=fca_live_ssUFBdQaPVdG0QzwykRXgdyJyILTC1iQv6q5QPNp`
               )
-              .pipe(map((res: any) => res.result))
+              .pipe(
+                map(
+                  (res: any) =>
+                    (this.returnEndpoint(finalDate) === 'historical'
+                      ? res.data[finalDate][finalCurrency]
+                      : res.data[finalCurrency]) * value
+                )
+              )
           );
     } catch {
       return null;

@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    if (!req.url.includes('api.exchangerate.host')) {
+    if (!req.url.includes('api.freecurrencyapi.com')) {
       req = req.clone({
         withCredentials: true,
       });
@@ -17,7 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     if (
       this.authService.isLoggedIn &&
-      !req.url.includes('api.exchangerate.host')
+      !req.url.includes('api.freecurrencyapi.com')
     ) {
       const authTokens = this.authService.getTokens();
 
