@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Chart } from 'chart.js';
 
 enum ChartType {
   CATEGORY,

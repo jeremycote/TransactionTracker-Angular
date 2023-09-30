@@ -24,14 +24,15 @@ export class CategoryChartsComponent implements OnInit {
     return this.year$.getValue();
   }
   year$ = new BehaviorSubject(new Date().getFullYear());
+  set categoryList(value: number[]) {
+    this.categoryList$.next(value);
+  }
+  get categoryList(): number[] {
+    return this.categoryList$.getValue();
+  }
+  categoryList$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([0]);
+
   categories$ = this.categoriesService.fetchCategories$();
-  set category(value: number) {
-    this.category$.next(value);
-  }
-  get category() {
-    return this.category$.getValue();
-  }
-  category$ = new BehaviorSubject<number>(0);
   lineChartData$: Observable<ChartConfiguration<'line'>['data']> | undefined;
 
   public lineChartOptions: ChartConfiguration<'line'>['options'] = {
@@ -67,12 +68,12 @@ export class CategoryChartsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    combineLatest([this.year$, this.category$])
+    combineLatest([this.year$, this.categoryList$])
       .pipe(
         tap(
-          ([year, category]) =>
+          ([year, categories]) =>
             (this.lineChartData$ = this.transactionsService
-              .fetchChartsDatasets$(year, category)
+              .fetchChartsDatasets$(year, categories)
               .pipe(
                 map((data) => ({
                   datasets: data,
