@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { NgChartsModule } from 'ng2-charts';
 import { CategoryChartsComponent } from './category-charts/category-charts.component';
 import { PieChartsComponent } from './pie-charts/pie-charts.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 export const routes: Routes = [
   {
@@ -26,7 +27,13 @@ export class ChartsRouting {}
     CategoryChartsComponent,
     PieChartsComponent,
   ],
-  imports: [CommonModule, ChartsRouting, FormsModule, NgChartsModule],
+  imports: [
+    CommonModule,
+    ChartsRouting,
+    FormsModule,
+    NgChartsModule,
+    NgSelectModule,
+  ],
   exports: [ChartsPageComponent],
 })
 export class ChartsPageModule {}
